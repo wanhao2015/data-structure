@@ -124,7 +124,7 @@ Status ListInsert(LinkList *L,int i,Elemtype e)
 /* 操作结果：删除L的第i个数据元素，并用e返回其值，L的长度减1 */
 Status ListDelete(LinkList *L,int i,Elemtype *e)
 {
-	LinkList p;
+	LinkList p,q;
 	int j=1;
 	p=*L;
 	while(p && j<i)
@@ -134,8 +134,10 @@ Status ListDelete(LinkList *L,int i,Elemtype *e)
 	}
 	if(p->next == NULL || j>i)
 		return ERROR;
-	*e=p->next->data;
-	p->next=p->next->next;
+	q=p->next;
+	p->next=q->next;
+	*e=q->data;
+	free(q);
 	return OK;
 }
 
